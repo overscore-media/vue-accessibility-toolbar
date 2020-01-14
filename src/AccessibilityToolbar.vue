@@ -1,41 +1,51 @@
 <template>
   <div class="fab">
     <span class="fab-action-button" @click="showToolbar = !showToolbar">
-      <i class="material-icons fab-action-button-icon">
-        accessibility
-      </i>
+      <human class="fab-action-button-icon" />
     </span>
     <transition name="fade">
       <div class='accessibility-toolbar' v-if="showToolbar">
         <ul class="accessibility-items">
           <li class="accessibility-item">
-            <a class="accessibility-menu-item" :data-tooltip="invertColorsText" v-bind:class="{ active: accessibilityStates.inverted }" @click="toggleState('inverted')" :aria-label="invertColorsText">
-              <i class="material-icons accessibility-menu-item-icon">
-                invert_colors
-              </i>
+            <a class="accessibility-menu-item" :data-tooltip="invertColorsText" :class="{ active: accessibilityStates.inverted }" @click="toggleState('inverted')" :aria-label="invertColorsText">
+              <invert-colors class="accessibility-menu-item-icon" />
             </a>
           </li>
           <li>
-            <a class="accessibility-menu-item" :data-tooltip="highlightLinksText" v-bind:class="{ active: accessibilityStates.highlighted }" @click="toggleState('highlighted')" :aria-label="highlightLinksText">
-              <i class="material-icons accessibility-menu-item-icon">
-                highlight
-              </i>
+            <a class="accessibility-menu-item" :data-tooltip="highlightLinksText" :class="{ active: accessibilityStates.highlighted }" @click="toggleState('highlighted')" :aria-label="highlightLinksText">
+              <flashlight class="accessibility-menu-item-icon" />
             </a>
           </li>
           <li>
-            <a class="accessibility-menu-item" :data-tooltip="grayscaleText" v-bind:class="{ active: accessibilityStates.greyscaled }" @click="toggleState('greyscaled')" :aria-label="grayscaleText">
-              <i class="material-icons accessibility-menu-item-icon">
-                format_color_reset
-              </i>
+            <a class="accessibility-menu-item" :data-tooltip="grayscaleText" :class="{ active: accessibilityStates.greyscaled }" @click="toggleState('greyscaled')" :aria-label="grayscaleText">
+              <water-off class="accessibility-menu-item-icon" />
             </a>
           </li>
           <li>
-            <a class="accessibility-menu-item" :data-tooltip="accessibileFontSizeText" v-bind:class="{ active: accessibilityStates.accessibileFontSize }" @click="toggleState('accessibileFontSize')" :aria-label="accessibileFontSizeText">
-              <i class="material-icons accessibility-menu-item-icon">
-                format_size
-              </i>
+            <a class="accessibility-menu-item" :data-tooltip="accessibileFontSizeText" :class="{ active: accessibilityStates.accessibileFontSize }" @click="toggleState('accessibileFontSize')" :aria-label="accessibileFontSizeText">
+              <format-font-size-increase class="accessibility-menu-item-icon" />
             </a>
           </li>
+          <li>
+            <a class="accessibility-menu-item" :data-tooltip="dyslexicFontText" :class="{ active: accessibilityStates.dyslexicFont }" @click="toggleState('dyslexicFont')" :aria-label="dyslexicFontText">
+              <eye-outline class="accessibility-menu-item-icon" />
+            </a>
+          </li><!--
+          <li>
+            <a class="accessibility-menu-item" :data-tooltip="textToSpeechText" :class="{ active: accessibilityStates.dyslexicFont }" @click="toggleState('dyslexicFont')" :aria-label="dyslexicFontText">
+              <text-to-speech class="accessibility-menu-item-icon" />
+            </a>
+          </li>
+          <li>
+            <a class="accessibility-menu-item" :data-tooltip="pdfText" :class="{ active: accessibilityStates.dyslexicFont }" @click="toggleState('dyslexicFont')" :aria-label="dyslexicFontText">
+              <pdf-box class="accessibility-menu-item-icon" />
+            </a>
+          </li>
+          <li>
+            <a class="accessibility-menu-item" :data-tooltip="cursorText" :class="{ active: accessibilityStates.dyslexicFont }" @click="toggleState('dyslexicFont')" :aria-label="dyslexicFontText">
+              <cursor-default class="accessibility-menu-item-icon" />
+            </a>
+          </li> -->
         </ul>
       </div>
     </transition>
@@ -43,9 +53,29 @@
 </template>
 
 <script>
+//import TextToSpeech from 'mdi-vue/TextToSpeech'
+import FormatFontSizeIncrease from 'mdi-vue/FormatFontSizeIncrease'
+import WaterOff from 'mdi-vue/WaterOff'
+import Flashlight from 'mdi-vue/Flashlight'
+import InvertColors from 'mdi-vue/InvertColors'
+import Human from 'mdi-vue/Human'
+import EyeOutline from 'mdi-vue/EyeOutline'
+//import PdfBox from 'mdi-vue/PdfBox'
+//import CursorDefault from 'mdi-vue/CursorDefault'
 
 export default {
   name: 'AccessibilityToolbar',
+  components: {
+    //TextToSpeech,
+    FormatFontSizeIncrease,
+    WaterOff,
+    Flashlight,
+    InvertColors,
+    Human,
+    EyeOutline,
+    //PdfBox,
+    //CursorDefault
+  },
   props: {
     invertColorsText: {
       type: String,
@@ -62,6 +92,22 @@ export default {
     accessibileFontSizeText: {
       type: String,
       default: "Increase Text Size"
+    },
+    dyslexicFontText: {
+      type: String,
+      default: "OpenDyslexic Font"
+    },
+    textToSpeechText: {
+      type: String,
+      default: "Read Selection Aloud"
+    },
+    pdfText: {
+      type: String,
+      default: "PDF Text Alternative"
+    },
+    cursorText: {
+      type: String,
+      default: "Enlarge the Mouse Cursor"    
     }
   },
   data() {
@@ -70,7 +116,8 @@ export default {
         inverted: false,
         highlighted: false,
         accessibileFontSize: false,
-        greyscaled: false
+        greyscaled: false,
+        dyslexicFont: false
       },
       showToolbar: false,
     }
@@ -101,6 +148,10 @@ export default {
         this.accessibilityStates[state] ?
           document.body.classList.add("accessibility-font") :
           document.body.classList.remove("accessibility-font")
+      } else if (state === "dyslexicFont") {
+        this.accessibilityStates[state] ?
+          document.body.classList.add("dyslexic-font") :
+          document.body.classList.remove("dyslexic-font")
       }
     },
     resetInvertContrast() {
@@ -222,7 +273,7 @@ export default {
     list-style-type: none;
   }
   .accessibility-toolbar {
-    width: 300px;
+    width: 70vw;
     position: absolute;
     left: 65px;
     bottom: 50%;
@@ -259,6 +310,13 @@ export default {
 </style>
 
 <style>
+@font-face {
+  font-family: 'opendyslexic';
+	src: url('./OpenDyslexic-Regular.woff2');
+	font-style: normal;
+	font-weight: normal;
+} 
+
   .accessibility-font {
     font-size: 1.25em;
     font-size: 1.25rem;
@@ -280,6 +338,11 @@ export default {
     background-color: black !important;
     color: yellow !important;
     text-decoration: underline !important;
+  }
+
+  .dyslexic-font {
+    cursor: url(http://cursor.in/assets/copy.svg), auto !important;
+    font-family: 'opendyslexic' !important;
   }
 </style>
 
@@ -308,7 +371,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
     font-size: 37px !important;
     color: white;
   }

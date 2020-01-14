@@ -1,14 +1,27 @@
 # vue-accessibility-toolbar
-![alt text](https://user-images.githubusercontent.com/19203626/61536206-69b4f900-aa34-11e9-88d0-1563425f20dd.png)
 
-[Demo](https://hendrixfan.github.io/vue-accessibility-toolbar/)
+A fork of the incredible [Vue-Accessibility-Toolbar](https://hendrixfan.github.io/vue-accessibility-toolbar/).
+
+### Includes other stuff:
+
+ - [OpenDyslexic Font](https://github.com/antijingoist/opendyslexic)
+ - Updated Dependencies and such
+ - [Material Design Icons](https://materialdesignicons.com/)
+
+### Coming Soon:
+
+ - Big Mouse Cursor
+ - Built-in Screen Reader
+ - PDF Text-based alternative generator by PDFkit
+ - Nuxt.js Support
+
 ## Usage
 
-```HTML
+```html
 <AccessibilityToolbar></AccessibilityToolbar>
 ```
 
-```javascript
+```js
 import { AccessibilityToolbar } from 'vue-accessibility-toolbar'
 
 export default {
@@ -18,11 +31,7 @@ export default {
 }
 ```
 
-## API
-
-### accessibility-toolbar
-
-#### props
+#### Props
 
 - `invert-colors-text` ***String*** (*optional*) `default: 'Invert Colors'`
 
@@ -32,8 +41,4 @@ export default {
 
 - `accessibile-font-size-text` ***String*** (*optional*) `default: 'Increase Text Size'`
 
-## Installation
-
-```
-npm install vue-accessibility-toolbar
-```
+-  dyslexic-font-text ***String*** (*optional*) `default: 'Desaturate'`

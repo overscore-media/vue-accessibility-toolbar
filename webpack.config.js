@@ -11,8 +11,7 @@ module.exports = {
     filename: 'build.js'
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -40,6 +39,16 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
+        }]
       }
     ]
   },
@@ -50,7 +59,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    port: 9000,
+    stats: 'minimal'
   },
   plugins: [
     new VueLoaderPlugin()
